@@ -9,12 +9,13 @@ namespace InfoDigest.DataLayer.Configurations
     {
         public AnswerOptionConfiguration()
         {
-            HasRequired(t => t.Answer);
+            HasKey(x => x.Id);
+            HasRequired(t => t.Question);
 
-            Property(t => t.AnswerId)
+            Property(t => t.QuestionId)
                 .IsRequired()
                 .HasColumnAnnotation("Index",
-                    new IndexAnnotation(new IndexAttribute("IX_AnswerOption") {IsUnique = true, Order = 1}));
+                    new IndexAnnotation(new IndexAttribute("IX_AnswerOption") { IsUnique = true, Order = 1 }));
 
             Property(t => t.IsCorrect)
                 .IsRequired()

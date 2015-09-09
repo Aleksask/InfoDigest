@@ -7,9 +7,14 @@ namespace InfoDigest.DataLayer
     public class InfoDigestContext : DbContext
     {
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Answer> Answers { get; set; }
+        public DbSet<QuestionCategory> QuestionCategories { get; set; }
 
-        public InfoDigestContext() : base("InfoDigest")
+        public InfoDigestContext()
+        {
+        }
+
+        public InfoDigestContext(string connectionStringName)
+            : base(connectionStringName)
         {
             Configuration.LazyLoadingEnabled = true;
         }
@@ -18,10 +23,9 @@ namespace InfoDigest.DataLayer
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Configurations.Add(new QuestionConfiguration());
             modelBuilder.Configurations.Add(new QuestionCategoryConfiguration());
-            modelBuilder.Configurations.Add(new AnswerConfiguration());
             modelBuilder.Configurations.Add(new AnswerOptionConfiguration());
+            modelBuilder.Configurations.Add(new QuestionConfiguration());
         }
     }
 }

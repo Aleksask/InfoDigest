@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InfoDigest.Domain
 {
@@ -7,11 +8,11 @@ namespace InfoDigest.Domain
         public int Id { get; set; }
         public string QuestionText { get; set; }
         public byte[] Image { get; set; }
-
-        public int AnswerId { get; set; }
+        //public int QuestionUserId { get; set; }
         public int CategoryId { get; set; }
 
-        public virtual Answer Answer { get; set; }
+
         public virtual QuestionCategory Category { get; set; }
+        public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
     }
 }

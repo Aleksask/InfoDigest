@@ -10,8 +10,8 @@ namespace InfoDigest.DataLayer.Configurations
         {
             HasKey(x => x.Id);
             HasRequired(x => x.Category);
-            HasRequired(x => x.Answer).WithRequiredPrincipal(z => z.Question);
-
+            HasMany(x => x.AnswerOptions);
+            
             Property(x => x.Image)
                 .IsOptional()
                 .IsVariableLength(); //this is variable by length anyways
