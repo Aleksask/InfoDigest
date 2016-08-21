@@ -11,14 +11,21 @@ namespace InfoDigest.Tests
 {
     [TestClass]
     public class DataLayerIntegrationTests
-    {
-        static DataLayerIntegrationTests()
+    {   
+        [TestInitialize]
+        public void PrepareTestDatabase()
+        {
+            Database.SetInitializer(new TestInfoDigestConfiguration());
+        }
+
+        [TestMethod]
+        public void Should_create_new_question_category_with_the_question_if_it_didnt_exist()
         {
             
         }
-        
-        [TestInitialize]
-        public void PrepareTestDatabase()
+
+        [TestMethod]
+        public void Should_not_create_questions_without_answer_options()
         {
             
         }
@@ -26,8 +33,6 @@ namespace InfoDigest.Tests
         [TestMethod]
         public void InstantiateTheContext()
         {
-            Database.SetInitializer(new TestInfoDigestConfiguration());
-
             var dbCtxt = new InfoDigestContext("InfoDigestTests");
 
             try
@@ -38,7 +43,7 @@ namespace InfoDigest.Tests
             }
             catch (DbUpdateException e)
             {
-                
+                throw e;
             }
             
         }

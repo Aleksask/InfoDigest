@@ -15,12 +15,7 @@ namespace InfoDigest.DataLayer.Configurations
             Property(t => t.QuestionId)
                 .IsRequired()
                 .HasColumnAnnotation("Index",
-                    new IndexAnnotation(new IndexAttribute("IX_AnswerOption") { IsUnique = true, Order = 1 }));
-
-            Property(t => t.IsCorrect)
-                .IsRequired()
-                .HasColumnAnnotation("Index",
-                    new IndexAnnotation(new IndexAttribute("IX_AnswerOption") {IsUnique = true, Order = 2}));
+                    new IndexAnnotation(new IndexAttribute("IX_AnswerOption") { IsUnique = false, Order = 1 }));
         }
     }
 }

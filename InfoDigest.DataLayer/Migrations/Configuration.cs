@@ -5,14 +5,13 @@ namespace InfoDigest.DataLayer.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    public class MigrationsConfiguration : DbMigrationsConfiguration<InfoDigest.DataLayer.InfoDigestContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<InfoDigest.DataLayer.InfoDigestContext>
     {
-        public MigrationsConfiguration()
+        public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            
         }
-        
+
         protected override void Seed(InfoDigest.DataLayer.InfoDigestContext context)
         {
             //  This method will be called after migrating to the latest version.

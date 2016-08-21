@@ -1,7 +1,10 @@
-﻿namespace InfoDigest.Domain
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace InfoDigest.Domain
 {
     public class AnswerOption
     {
+        [Key]
         public int Id { get; set; }
         public bool IsCorrect { get; set; }
         public string AnswerText { get; set; }

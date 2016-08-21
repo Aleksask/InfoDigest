@@ -8,6 +8,7 @@ namespace InfoDigest.DataLayer
     {
         public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionCategory> QuestionCategories { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
 
         public InfoDigestContext()
         {
