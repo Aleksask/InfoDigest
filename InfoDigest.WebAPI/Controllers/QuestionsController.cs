@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using InfoDigest.DataLayer.Repositories;
+using InfoDigest.Domain;
 using InfoDigest.WebAPI.Models;
+using Marvin.JsonPatch;
 
 namespace InfoDigest.WebAPI.Controllers
 {
@@ -93,21 +93,79 @@ namespace InfoDigest.WebAPI.Controllers
                 return InternalServerError(ex);
             }
         }
-
         [HttpPut]
-        public void Put(int id, [FromBody]string value)
+        [Route("{id}")]
+        public IHttpActionResult Put(int id, [FromBody]QuestionModel value)
         {
+            try
+            {
+                if (value == null)
+                    return BadRequest();
+                if(!value.IsValidForPut())
+                    return BadRequest("Question text, category, and id must be provided");
+
+                var entity = ModelFactory.Parse(value);
+                TheApplicationUnit.Questions.Update(entity);
+                TheApplicationUnit.SaveChanges();
+
+                return Ok(ModelFactory.Create(entity));
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         [HttpPatch]
-        public void Patch(int id, [FromBody] string value)
+        [Route("{id}")]
+        public async Task<IHttpActionResult> Patch(int id, [FromBody] JsonPatchDocument<QuestionModel> patchedQuestion)
         {
-            
+            try
+            {
+                if (patchedQuestion == null)
+                    return BadRequest();
+
+                var question = await TheApplicationUnit.Questions.GetById(id);
+                if (question == null)
+                    return NotFound();
+
+                var questionModel = ModelFactory.Create(question);
+                patchedQuestion.ApplyTo(questionModel);
+
+                TheApplicationUnit.Questions.Update(ModelFactory.Parse(questionModel));
+                TheApplicationUnit.SaveChanges();
+
+                return Ok(questionModel);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        // DELETE: api/questions/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IHttpActionResult> Delete(int id)
         {
+            try
+            {
+                if (id <= 0)
+                    return BadRequest("Provided id isn't valid");
+
+                var question = await TheApplicationUnit.Questions.GetById(id);
+                if (question == null)
+                {
+                    return NotFound();
+                }
+
+                TheApplicationUnit.Questions.Delete(question);
+
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

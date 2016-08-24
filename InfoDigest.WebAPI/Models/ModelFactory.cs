@@ -38,5 +38,23 @@ namespace InfoDigest.WebAPI.Models
                 return null;
             }
         }
+
+        public QuestionCategoryModel Create(QuestionCategory questionCategory)
+        {
+            return new QuestionCategoryModel(_urlHelper, questionCategory);
+        }
+
+        public QuestionCategory Parse(QuestionCategoryModel model)
+        {
+            try
+            {
+                return new QuestionCategory {Id = model.Id, CategoryName = model.Name};
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw;
+            }
+        }
     }
 }

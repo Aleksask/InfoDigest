@@ -3,7 +3,7 @@ using InfoDigest.Domain;
 
 namespace InfoDigest.WebAPI.Models
 {
-    public class QuestionModel
+    public class QuestionModel : IValidatable
     {
         public string Url { get; set; }
         public int Id { get; set; }
@@ -25,6 +25,27 @@ namespace InfoDigest.WebAPI.Models
             QuestionCategoryId = question.CategoryId;
             ImageBytes = question.Image;
             IsDeprecated = question.Deprecated;
+        }
+
+
+        public bool IsValidForPost()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsValidForDelete()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool IsValidForPut()
+        {
+            return Id != 0 && QuestionCategoryId != 0 && !string.IsNullOrEmpty(QuestionText);
+        }
+
+        public bool IsValidForPatch()
+        {
+            return Id != 0;
         }
     }
 }

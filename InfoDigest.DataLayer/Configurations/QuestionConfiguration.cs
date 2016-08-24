@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
 using InfoDigest.Domain;
 
 namespace InfoDigest.DataLayer.Configurations

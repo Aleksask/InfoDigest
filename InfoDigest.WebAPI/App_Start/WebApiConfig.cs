@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Security.Policy;
 using System.Web.Http;
 using InfoDigest.DataLayer.Repositories;
 using Newtonsoft.Json;
@@ -39,7 +35,7 @@ namespace InfoDigest
         {
             config.Formatters.XmlFormatter.MediaTypeMappings.Clear();
 
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json-patch+json"));
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();

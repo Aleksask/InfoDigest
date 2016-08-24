@@ -1,8 +1,7 @@
 namespace InfoDigest.DataLayer.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class RemovedTheIndex : DbMigration
     {
         public override void Up()

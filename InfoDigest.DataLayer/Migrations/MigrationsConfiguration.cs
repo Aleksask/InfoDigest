@@ -1,9 +1,6 @@
 namespace InfoDigest.DataLayer.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     public class MigrationsConfiguration : DbMigrationsConfiguration<InfoDigest.DataLayer.InfoDigestContext>
     {
