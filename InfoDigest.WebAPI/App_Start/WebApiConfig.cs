@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using CacheCow.Server.EntityTagStore.SqlServer;
 using InfoDigest.DataLayer.Repositories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -18,15 +20,14 @@ namespace InfoDigest
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi",
-            //    routeTemplate: "api/{controller}/{id}",
-            //    defaults: new { id = RouteParameter.Optional }
-            //);
-
             SetMediaTypeFormatters(config);
 
             config.DependencyResolver = new NinjectResolver(CreateInfoDigestKernel());
+
+            var etagstore = new SqlServerEntityTagStore(ConfigurationManager.ConnectionStrings["InfoDigestContext"].ConnectionString);
+            var cacheHandler = new CacheCow.Server.CachingHandler(config, etagstore) {AddLastModifiedHeader = true};
+
+            config.MessageHandlers.Add(cacheHandler);
 
             return config;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlTypes;
 using System.Net.Http;
 using System.Web.Http.Routing;
 using InfoDigest.Domain;
@@ -18,7 +19,6 @@ namespace InfoDigest.WebAPI.Models
         {
             return new QuestionModel(_urlHelper, question);
         }
-
         public Question Parse(QuestionModel model)
         {
             try
@@ -53,7 +53,31 @@ namespace InfoDigest.WebAPI.Models
             catch (Exception ex)
             {
                 return null;
-                throw;
+            }
+        }
+
+        public AnswerModel Create(AnswerOption answer)
+        {
+            return new AnswerModel(_urlHelper, answer);
+        }
+
+        public AnswerOption Parse(AnswerModel model)
+        {
+            try
+            {
+                return new AnswerOption
+                {
+                    AnswerExplanation = model.AnswerExplanation,
+                    AnswerText = model.AnswerText,
+                    Id = model.Id,
+                    QuestionId = model.QuestionId,
+                    AnswerUrl = model.AnswerUrl,
+                    IsCorrect = model.IsCorrect
+                };
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }
